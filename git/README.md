@@ -12,7 +12,7 @@ Click Generate token.
 
 Optionally, to copy the new token to your clipboard, click 
 
-Using a personal access token on the command line
+#### Using a personal access token on the command line
 Once you have a token, you can enter it instead of your password when performing Git operations over HTTPS.
 For example, on the command line you would enter the following:
 ```

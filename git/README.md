@@ -1,5 +1,6 @@
 # Git Notes
-## Generate Token
+## Pushing code to github using personal access token
+### Generate Token
 1. click your profile photo, then click Settings.
 2. In the left sidebar, click  Developer settings.
 3. In the left sidebar, under  Personal access tokens, click Tokens (classic).
@@ -10,7 +11,7 @@
 8. Click Generate token.
 9. Optionally, to copy the new token to your clipboard, click 
 
-#### Using a personal access token on the command line
+### Using a personal access token on the command line
 Once you have a token, you can enter it instead of your password when performing Git operations over HTTPS.
 For example, on the command line you would enter the following:
 ```

@@ -20,6 +20,16 @@ Username: YOUR_USERNAME
 Password: YOUR_TOKEN
 ```
 
+## Git pull issues 
+If we are unable to merge the remote branch with the local repo with below command  
+```
+git pull https://github.com/<username>/<myrepo.git> 
+```
+Thwn we can use the below command to forceful merge to the local and merge
+```
+git pull --rebace 
+```
+
 ### Road Map for git commands
 <img width="596" alt="Screenshot 2023-02-22 at 12 24 18 PM" src="https://user-images.githubusercontent.com/115966808/226376046-292ee51c-8c69-4674-87a1-8ae0e5abf19a.png">
 

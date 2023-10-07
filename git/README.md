@@ -20,6 +20,15 @@ Username: YOUR_USERNAME
 Password: YOUR_TOKEN
 ```
 
+And if username and password already stored on local then remove using the below commands:
+```
+git credential-cache exit
+git config --list
+git config --global credential.helper cache
+$ git config –-global user.name NEWUSER
+$ git config user.name NEWUSER
+
+```
 ## Git pull issues 
 If we are unable to merge the remote branch with the local repo with below command  
 ```

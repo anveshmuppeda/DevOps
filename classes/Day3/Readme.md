@@ -1,2 +1,2 @@
-#Day 3
-CloudFormation Templates
+# Day 3  
+CloudFormation Templates 

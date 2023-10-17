@@ -8,19 +8,19 @@ IPV4 CIDR: 10.0.0.0/16
 
 ### Create Subnets  
 Name: Public-1A
-AZ: ap-south-1a
+AZ: us-west-1b
 IPV4 CIDR: 10.0.1.0/24
 
 Name: Private-1A
-AZ: ap-south-1a
+AZ: us-west-1b
 IPV4 CIDR: 10.0.2.0/24
 
 Name: Public-2A
-AZ: ap-south-1b
+AZ: us-west-1c
 IPV4 CIDR: 10.0.3.0/24
 
 Name: Private-2A
-AZ: ap-south-1b
+AZ: us-west-1c
 IPV4 CIDR: 10.0.4.0/24
 
 ### Enable Public IP

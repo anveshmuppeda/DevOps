@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS Class - Creating VPC Using the Cloud Formation Template.
+
+Parameters:
+  Day:
+    Description: Day of the Class
+    Type: String
+    Default: Day8
+
+  VpcCIDR:
+    Description: Please enter the IP range (CIDR notation) for this VPC
+    Type: String
+    Default: 10.0.0.0/16
+
+Resources:
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      Tags:
+        - Key: Name
+          Value: MyVPC-DemoClass
+        - Key: Day
+          Value: !Ref Day

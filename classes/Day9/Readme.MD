@@ -1,5 +1,6 @@
 # Day 5  
 ## VPC  
+### Creating VPC, NAT Gateway, Public & Private Subnetes, Internet Gateway, EIP, EC2 Server along with user data, and Security Group Using the Cloud Formation Template.  
 
 ### Create VPC
 Name: MyVPC-DemoClass

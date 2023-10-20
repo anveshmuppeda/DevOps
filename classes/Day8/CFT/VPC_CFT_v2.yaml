@@ -11,6 +11,11 @@ Parameters:
     Description: Please enter the IP range (CIDR notation) for this VPC
     Type: String
     Default: 10.0.0.0/16
+  
+  MyVPCName:
+    Description: Please enter the VPC Name
+    Type: String
+    Default: MyVPC-DemoClass
 
 Resources:
   MyVPC:
@@ -19,6 +24,6 @@ Resources:
       CidrBlock: !Ref VpcCIDR
       Tags:
         - Key: Name
-          Value: MyVPC-DemoClass
+          Value: !Ref MyVPCName
         - Key: Day
           Value: !Ref Day

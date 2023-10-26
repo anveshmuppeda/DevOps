@@ -1,28 +1,12 @@
 SNSTopicCloudWatchAlarm:
     Type: AWS::SNS::Topic
     Properties:
-      DisplayName: "dctm-cloudwatch-alarm-topic"
+      DisplayName: "cloudwatch-alarm-topic"
       KmsMasterKeyId: !Sub 'alias/${ClusterName}_sns-alias'
       Subscription:
-        - Endpoint: "anvesh.muppeda@swbc.com"
+        - Endpoint: "anvesh.muppeda@gmail.com"
           Protocol: "email"
-        - Endpoint: "preethamreddy.gotham@swbc.com"
-          Protocol: "email"
-        - Endpoint: "rdaniels@swbc.com"
-          Protocol: "email"
-        - Endpoint: "spatibandla@swbc.com"
-          Protocol: "email"
-        - Endpoint: "ACarballeyra@swbc.com"
-          Protocol: "email"
-        - Endpoint: "ranjith.kaasireddy@swbc.com"
-          Protocol: "email"
-        - Endpoint: "shekhar.khandebharad@swbc.com"
-          Protocol: "email"
-        - Endpoint: "DGopal@swbc.com"
-          Protocol: "email"
-        - Endpoint: "JBaldwin@swbc.com"
-          Protocol: "email"
-      TopicName: "dctm-cloudwatch-alarm-topic"
+      TopicName: "cloudwatch-alarm-topic"
 
   CloudWatchAlaramWorkers:
     DependsOn: SNSTopicCloudWatchAlarm

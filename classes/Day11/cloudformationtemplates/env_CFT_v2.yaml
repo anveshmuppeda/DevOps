@@ -1,6 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: AWS Class - Creating VPC, NAT Gateway, Public & Private Subnetes, Internet Gateway, 
-  and EIP Using the Cloud Formation Template.
+  and EIP Using the Cloud Formation Template. And deploying it in Dev, Test, and Prod. Based on the 
+  environment deploying the respective server.
 
 Parameters:
   Environment:
@@ -11,10 +12,11 @@ Parameters:
       - dev
       - test
       - prod
+
   Day:
     Description: Day of the Class
     Type: String
-    Default: Day9
+    Default: Day-11
 
   VpcCIDR:
     Description: Please enter the IP range (CIDR notation) for this VPC
@@ -40,25 +42,26 @@ Parameters:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
     Type: String
     Default: 10.0.4.0/24
-
-  TypeOfInstance:
-    Description: "Specify the Instance Type."
+  
+  PublicSubnet3CIDR:
+    Description: Please enter the IP range (CIDR notation) for the public subnet in the second Availability Zone
     Type: String
-    Default: t2.micro
-    AllowedValues:
-      - t2.nano
-      - t2.micro
-      - t2.small
+    Default: 10.0.5.0/24
 
-  AmiID:
+  LinuxAmiID:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Description: "The ID of the AMI."
     Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
 
+  UbuntuAmiID:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Description: "The ID of the AMI."
+    Default: /aws/service/canonical/ubuntu/server/jammy/stable/current/amd64/hvm/ebs-gp2/ami-id
+
   KeyPairName:
     Type: String
     Description: The name of an existing Amazon EC2 key pair in this region to use to SSH into the Amazon EC2 instances.
-    Default: mumbai
+    Default: us-east-1
   
   SecurityGroupSuffix:
     Type: String
@@ -106,6 +109,7 @@ Mappings:
       ServerName: prod-server
       InstanceType: t2.small
       PublicSubnetName: prod-public-subnet
+      IndependentSubnetName: prod-specific-subnet
       PrivateSubnetName: prod-private-subnet
       InternetGatewayName: prod-internet-gateway
       PublicRouteTableName: prod-public-route-table
@@ -163,6 +167,20 @@ Resources:
       Tags:
         - Key: Name
           Value: !Join ["-", [!FindInMap [Environment, !Ref Environment, PublicSubnetName], 2]]
+        - Key: Day
+          Value: !Ref Day
+  
+  PublicSubnet3:
+    Condition: isProduction
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref PublicSubnet3CIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !FindInMap [Environment, !Ref Environment, IndependentSubnetName]
         - Key: Day
           Value: !Ref Day
 
@@ -338,12 +356,18 @@ Resources:
       RouteTableId: !Ref PublicRouteTable
       SubnetId: !Ref PublicSubnet2
   
+  PublicSubnet3RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet3
+  
   MyBastionServer:
     Type: AWS::EC2::Instance
     DependsOn: PublicSercuritGroup
     Properties:
       SubnetId: !Ref PublicSubnet1
-      ImageId: !Ref AmiID
+      ImageId: !Ref LinuxAmiID
       InstanceType: !FindInMap [Environment, !Ref Environment, InstanceType]
       KeyName: !Ref KeyPairName
       SecurityGroupIds:
@@ -353,6 +377,8 @@ Resources:
           Value: !FindInMap [Environment, !Ref Environment, BastionServerName]
         - Key: Day
           Value: !Ref Day
+        - Key: Application
+          Value: Bastion
       UserData:
         Fn::Base64: 
           !Sub |
@@ -368,7 +394,7 @@ Resources:
     DependsOn: PrivateSercuritGroup
     Properties:
       SubnetId: !Ref PrivateSubnet1
-      ImageId: !Ref AmiID
+      ImageId: !Ref LinuxAmiID
       InstanceType: !FindInMap [Environment, !Ref Environment, InstanceType]
       KeyName: !Ref KeyPairName
       SecurityGroupIds:
@@ -378,6 +404,8 @@ Resources:
           Value: !Join ["-", [!FindInMap [Environment, !Ref Environment, PrivateServerName], 1]]
         - Key: Day
           Value: !Ref Day
+        - Key: Application
+          Value: Python
       UserData:
         Fn::Base64: 
           !Sub |
@@ -395,7 +423,7 @@ Resources:
     DependsOn: PublicSercuritGroup
     Properties:
       SubnetId: !Ref PublicSubnet2
-      ImageId: !Ref AmiID
+      ImageId: !Ref LinuxAmiID
       InstanceType: !FindInMap [Environment, !Ref Environment, InstanceType]
       KeyName: !Ref KeyPairName
       SecurityGroupIds:
@@ -405,6 +433,8 @@ Resources:
           Value: !Join ["-", [!FindInMap [Environment, !Ref Environment, PublicServerName], 2]]
         - Key: Day
           Value: !Ref Day
+        - Key: Application
+          Value: Public Application
       UserData:
         Fn::Base64: 
           !Sub |
@@ -420,7 +450,7 @@ Resources:
     DependsOn: PrivateSercuritGroup
     Properties:
       SubnetId: !Ref PrivateSubnet2
-      ImageId: !Ref AmiID
+      ImageId: !Ref LinuxAmiID
       InstanceType: !FindInMap [Environment, !Ref Environment, InstanceType]
       KeyName: !Ref KeyPairName
       SecurityGroupIds:
@@ -430,6 +460,8 @@ Resources:
           Value: !Join ["-", [!FindInMap [Environment, !Ref Environment, PrivateServerName], 2]]
         - Key: Day
           Value: !Ref Day
+        - Key: Application
+          Value: MySQL
       UserData:
         Fn::Base64: 
           !Sub |
@@ -443,13 +475,13 @@ Resources:
             yum install mysql-community-libs
             systemctl start mysqld
 
-  MyJavaServer:
+  MyTestJavaServer:
     Type: AWS::EC2::Instance
-    Condition: isProduction
+    Condition: isTest
     DependsOn: PrivateSercuritGroup
     Properties:
-      SubnetId: !Ref PrivateSubnet2
-      ImageId: !Ref AmiID
+      SubnetId: !Ref PublicSubnet2
+      ImageId: !Ref LinuxAmiID
       InstanceType: !FindInMap [Environment, !Ref Environment, InstanceType]
       KeyName: !Ref KeyPairName
       SecurityGroupIds:
@@ -459,6 +491,8 @@ Resources:
           Value: !Join ["-", [!FindInMap [Environment, !Ref Environment, PrivateServerName], java-server]]
         - Key: Day
           Value: !Ref Day
+        - Key: Application
+          Value: Java
       UserData:
         Fn::Base64: 
           !Sub |
@@ -468,9 +502,18 @@ Resources:
             systemctl start httpd.service
             systemctl enable httpd.service
             echo "Hello this is from Java Server, i.e., Private Subnete 2" > /var/www/html/index.html
-            yum install mysql-community-server
-            yum install mysql-community-libs
-            systemctl start mysqld
+            sudo yum install java
+            sudo yum install java-devel
+            sudo yum install java-17-openjdk
+            sudo alternatives --config java
+            export JAVA_HOME=(/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.322.b06-2.el8_5.x86_64/jre
+            sudo sh -c "echo export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.322.b06-2.el8_5.x86_64/jre >> /etc/environment"
+            sudo yum install wget
+            cd ~
+            wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.rpm"
+            sudo yum localinstall jdk-17_linux-x64_bin.rpm
+            rm ~/jdk-17_linux-x64_bin.rpm
+            sudo alternatives --config java
   
   MyDevPythonServer:
     Type: AWS::EC2::Instance
@@ -478,7 +521,7 @@ Resources:
     DependsOn: PrivateSercuritGroup
     Properties:
       SubnetId: !Ref PrivateSubnet2
-      ImageId: !Ref AmiID
+      ImageId: !Ref LinuxAmiID
       InstanceType: !FindInMap [Environment, !Ref Environment, InstanceType]
       KeyName: !Ref KeyPairName
       SecurityGroupIds:
@@ -488,6 +531,8 @@ Resources:
           Value: !Join ["-", [!FindInMap [Environment, !Ref Environment, PrivateServerName], python-server]]
         - Key: Day
           Value: !Ref Day
+        - Key: Application
+          Value: Python
       UserData:
         Fn::Base64: 
           !Sub |
@@ -496,36 +541,133 @@ Resources:
             yum install -y httpd.x86_64
             systemctl start httpd.service
             systemctl enable httpd.service
-            echo "Hello this is from Python Server, i.e., Private Subnete 2" > /var/www/html/index.html
-            yum install mysql-community-server
-            yum install mysql-community-libs
+            echo "Hello this is from **DEV** Python Server, i.e., Private Subnete 2" > /var/www/html/index.html
+            yum install python3
             systemctl start mysqld
 
-  MyTestDockerServer:
+  MyProdDockerServer:
     Type: AWS::EC2::Instance
-    Condition: isTest
+    Condition: isProduction
     DependsOn: PrivateSercuritGroup
     Properties:
-      SubnetId: !Ref PrivateSubnet2
-      ImageId: !Ref AmiID
+      SubnetId: !Ref PublicSubnet3
+      ImageId: !Ref UbuntuAmiID
       InstanceType: !FindInMap [Environment, !Ref Environment, InstanceType]
       KeyName: !Ref KeyPairName
       SecurityGroupIds:
         - !Ref PrivateSercuritGroup
       Tags:
         - Key: Name
-          Value: !Join ["-", [!FindInMap [Environment, !Ref Environment, PrivateServerName], docker-server]]
+          Value: !Join ["-", [!Ref Environment, docker-server]]
         - Key: Day
           Value: !Ref Day
+        - Key: Application
+          Value: Docker
       UserData:
         Fn::Base64: 
           !Sub |
             #!/bin/bash
-            yum update -y
-            yum install -y httpd.x86_64
-            systemctl start httpd.service
-            systemctl enable httpd.service
-            echo "Hello this is Docker Server, i.e., Private Subnete 2" > /var/www/html/index.html
-            yum install mysql-community-server
-            yum install mysql-community-libs
-            systemctl start mysqld
+            #updating the apt repository
+            apt-get update -y
+
+            #Docker Installation
+            #If you are running Linux you will need to install Docker directly. You should be logged in as a user with sudo privileges. First, you will need to ensure that you have the command line utility cURL. Do this by opening a terminal and typing
+            which curl
+            sudo apt-get update
+            #If cURL is not installed, update your package manager and install it, using:
+            sudo apt-get install curl
+            #Now that you have cURL, you can use it to get the latest Docker package:
+            curl -fsSL https://get.docker.com/ | sh
+            #Add your account to the docker group.
+            #sudo usermod -aG docker <your_username>, here <your_username> is root
+            sudo usermod -aG docker root
+            #This step is required to be able to run Docker commands as a non-root user. You will have to log out and log back in for the change to take effect.
+            #Now you should have Docker! Verify that it is installed by running the hello-world container:
+            docker run hello-world
+
+            #Running our Actual Website using nginx:
+            docker run -d -p 80:80 --name nginx nginx
+
+Outputs:
+  VpcId:
+    Description: VPC ID of the newly created VPC
+    Value: !Ref MyVPC
+    
+  PrivateServer1InstanceId:
+    Description: InstanceId of the Bastion Server
+    Value: !Ref 'MyPrivateServer1'
+
+  PrivateServer2InstanceId:
+    Description: InstanceId of the Bastion Server
+    Value: !Ref 'MyPrivateServer2'
+
+  BastionInstanceId:
+    Description: InstanceId of the Bastion Server
+    Value: !Ref 'MyBastionServer'
+
+  BastionPublicIP:
+    Description: Public IP address of the Bastion Server
+    Value: !Join 
+      - ''
+      - - 'http://'
+        - !GetAtt 
+          - MyBastionServer
+          - PublicIp
+
+  PublicInstanceId:
+    Description: InstanceId of the Public Server
+    Value: !Ref 'MyPublicServer'
+
+  PublicServerPublicIP:
+    Description: Public IP address of the Public Server
+    Value: !Join 
+      - ''
+      - - 'http://'
+        - !GetAtt 
+          - MyPublicServer
+          - PublicIp
+
+  DockerInstanceId:
+    Condition: isProduction
+    Description: InstanceId of the Docker Server
+    Value: !Ref 'MyProdDockerServer'
+
+  DockerWebsiteURL:
+    Description: URL for Docker Website
+    Condition: isProduction
+    Value: !Join 
+      - ''
+      - - 'http://'
+        - !GetAtt 
+          - MyProdDockerServer
+          - PublicIp
+
+  JavaInstanceId:
+    Condition: isTest
+    Description: InstanceId of the Java Server
+    Value: !Ref 'MyTestJavaServer'
+
+  JavaPublicIP:
+    Condition: isTest
+    Description: Public IP address of the  Java Server
+    Value: !Join 
+      - ''
+      - - 'http://'
+        - !GetAtt 
+          - MyTestJavaServer
+          - PublicIp
+
+  PythonInstanceId:
+    Condition: isDev
+    Description: InstanceId of the Python Server
+    Value: !Ref 'MyDevPythonServer'
+
+  PythonPublicIP:
+    Condition: isDev
+    Description: Public IP address of the Python Server
+    Value: !Join 
+      - ''
+      - - 'http://'
+        - !GetAtt 
+          - MyDevPythonServer
+          - PublicIp

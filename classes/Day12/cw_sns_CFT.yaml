@@ -612,7 +612,7 @@ Resources:
           Protocol: "email"
         - Endpoint: "testing@gmail.com"
           Protocol: "email"
-        - Endpoint: "redraiders@gmail.com"
+        - Endpoint: "rr@gmail.com"
           Protocol: "email"
       TopicName: !FindInMap [Environment, !Ref Environment , SNSTopicName]
       Tags:

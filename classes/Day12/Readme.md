@@ -1,3 +1,3 @@
 # Day 12  
-## CloudWatch Alarms and SNS  
+## AWS CloudWatch, Alarms and SNS  
 ## Docker Intro 

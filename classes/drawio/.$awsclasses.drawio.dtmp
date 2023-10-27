@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-10-26T01:16:55.902Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="MgmMwGtdc2S8LtiFUlQ9" version="22.0.2" type="device" pages="8">
+<mxfile host="Electron" modified="2023-10-27T02:09:20.278Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="yRPBfCeKE27j1p_5m3xa" version="22.0.2" type="device" pages="9">
   <diagram id="LzZZM8jmEVRe4Ekt1hV2" name="Day-1">
     <mxGraphModel dx="954" dy="616" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -619,7 +619,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="q4y7pgcMoVF9A-OQxyEJ" name="Page-10">
-    <mxGraphModel dx="4426" dy="2860" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2760" dy="1784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -767,7 +767,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="iij2Jb_8jRSjkC3jA5Kt" name="Page-8">
-    <mxGraphModel dx="2609" dy="1687" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3608" dy="2332" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -848,6 +848,56 @@
         </mxCell>
         <mxCell id="pc0KtgPnCaKif-w-ge0C-9" value="" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
           <mxGeometry x="670" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="GvbrQh1qgGQITMErhTYA" name="Page-9">
+    <mxGraphModel dx="1122" dy="725" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-1" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry y="80" width="840" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NCK26k5qa2Kvl1Zn5lqV-2" target="NCK26k5qa2Kvl1Zn5lqV-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-2" value="EC2 -&amp;gt; sql, python, java 7.3, httpd, apache,&lt;br&gt;java 7.6" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="290" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NCK26k5qa2Kvl1Zn5lqV-4" target="NCK26k5qa2Kvl1Zn5lqV-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-8" value="&amp;gt;90%" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="NCK26k5qa2Kvl1Zn5lqV-7">
+          <mxGeometry x="-0.1867" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="NCK26k5qa2Kvl1Zn5lqV-4" target="NCK26k5qa2Kvl1Zn5lqV-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="410" />
+              <mxPoint x="180" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-10" value="&amp;lt;90%" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="NCK26k5qa2Kvl1Zn5lqV-9">
+          <mxGeometry x="-0.329" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-4" value="CPU Util" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="280" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="NCK26k5qa2Kvl1Zn5lqV-6" target="NCK26k5qa2Kvl1Zn5lqV-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-6" value="SNS" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="290" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="NCK26k5qa2Kvl1Zn5lqV-11" value="Send a mail" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="170" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

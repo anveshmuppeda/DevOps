@@ -61,7 +61,7 @@ docker inspect <container-id>
 ```
 docker rm <container-id>
 ```
-
+---
 <a name="run"></a>
 ## Run Container
 ### Append a command  

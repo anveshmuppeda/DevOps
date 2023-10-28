@@ -1,15 +1,18 @@
 # Docker Commands  
 1. [ Image ](#image)
 2. [ Container ](#container)
-3. [ Container Exec ](#exec)
+3. [ Running Container ](#run)
+4. [ Container Exec ](#exec)
+5. [ Nginx Container ](#nginx)
+
 ---  
 <a name="image"></a>
 ## Image  
 
 ### Pull – download an image  
 ```
-docker run nginx  
-docker pull nginx  
+docker run nginx:<version>   
+docker pull nginx:<version>   
 ```
 
 ### images - List images  
@@ -28,7 +31,7 @@ docker rmi <imagename:tag>
 
 ### Run - Start a container  
 ```
-docker run nginx
+docker run nginx:<version>
 ```  
 
 ### ps – list containers  
@@ -59,20 +62,32 @@ docker inspect <container-id>
 docker rm <container-id>
 ```
 
+<a name="run"></a>
+## Run Container
 ### Append a command  
 ```
 docker run ubuntu sleep 5
 ```  
-### Run - Attache & Detach  
 
-docker run will run the command in attach or foreground mode
+### Run - Attache & Detach  
+docker run will run the command in attach or foreground mode  
 ```
 docker run <image> 
 ```
 
-docker run -d will run the container in dettach or background mode
+docker run -d will run the container in dettach or background mode  
 ```
 docker run -d <image>
+```
+
+### Naming container
+```
+docker run -d --name <container-name> <image-name>  
+```
+
+### Running container on specific port  
+```
+docker run -d -p <host_port>:<container_port> --name <container-name> <image-name>  
 ```
 
 ---  
@@ -80,11 +95,41 @@ docker run -d <image>
 <a name="exec"></a>
 ## Container Login  
 
-### Exec - execute command  
+### Exec - execute command on running container  
 ```
 docker exec <container-id>  cat /etc/hosts  
 ```  
 
+### Login to running container  
+```
+docker exec -it <container-id> bash  
+```  
+
+### Login to container  by running  
+```
+docker run -it <image> bash  
+```
+
+---  
+
+<a name="nginx"></a>
+## Nginx  container
+
+### Source conf  
+Paths::  
+source configuration  
+```
+/etc/nginx/conf.d  
+```
+webpage path  
+```
+/usr/share/nginx/html  
+```
 
 
+#nginx conf  
+```
+/etc/nginx/nginx.conf  
+```
 
+---

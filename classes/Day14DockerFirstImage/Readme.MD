@@ -4,7 +4,7 @@
 2. [ Container ](#container)
 3. [ Running Container ](#run)
 4. [ Container Exec ](#exec)
-5. [ Image Build ](#build)
+5. [ Image Build & Tag ](#build)
 6. [ Nginx Container ](#nginx)
 
 ---  
@@ -49,6 +49,7 @@ To additionally remove any stopped containers and all unused images (not just da
 ```
 docker system prune -a
 ```
+
 ---  
 <a name="container"></a>
 ## Container  
@@ -148,16 +149,12 @@ docker run -it <image> bash
 ---  
 
 <a name="build"></a>
-## Image Build  
+## Image Build & Tag  
 
 ### Use below command to build image  
 ```
 docker build --tag "<image-name>:<image-tag>" --file "/path/to/Dockerfile" .
 ```
-
----
-<a name="tag"></a>
-## Image Tag  
 
 ### to tag the current image with different tag  
 ```

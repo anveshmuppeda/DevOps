@@ -9,4 +9,7 @@
 |WORKDIR    |    Changing the source directory    |
 |COPY       |    Sopy Source Code    |
 |CMD        |    Commands to execute    |
-***
+*** 
+
+Reference:  
+https://docs.docker.com/engine/reference/builder/  

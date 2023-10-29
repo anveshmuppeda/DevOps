@@ -45,7 +45,7 @@ Mappings:
 
     prod:
       ServerName: prod-server
-      InstanceType: t2.micro
+      InstanceType: t3.medium
       PublicSecurityGroupName: docker-sg
 
 Conditions:

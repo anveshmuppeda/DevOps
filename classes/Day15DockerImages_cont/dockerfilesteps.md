@@ -11,5 +11,8 @@
 |CMD        |    Commands to execute    |
 *** 
 
+**RUN**. Mainly used to build images and install applications and packages. Builds a new layer over an existing image by committing the results.
+**CMD**. Sets default parameters that can be overridden from the Docker Command Line Interface (CLI) when a container is running.
+**ENTRYPOINT**. Default parameters that cannot be overridden when Docker Containers run with CLI parameters. 
 Reference:  
 https://docs.docker.com/engine/reference/builder/  

@@ -12,12 +12,12 @@
 *** 
 
 ---
-**NOTE**
-  **RUN**. Mainly used to build images and install applications and packages. Builds a new layer over an existing image by committing the results.  
-
-  **CMD**. Sets default parameters that can be overridden from the Docker Command Line Interface (CLI) when a container is running. 
-
-  **_NOTE:_**  **ENTRYPOINT**. Default parameters that cannot be overridden when Docker Containers run with CLI parameters.   
+> [!NOTE] 
+>  **RUN**. Mainly used to build images and install applications and packages. Builds a new layer over an existing image by committing the results.  
+>
+>  **CMD**. Sets default parameters that can be overridden from the Docker Command Line Interface (CLI) when a container is running. 
+>
+>  **_NOTE:_**  **ENTRYPOINT**. Default parameters that cannot be overridden when Docker Containers run with CLI parameters.   
 
 ---
 

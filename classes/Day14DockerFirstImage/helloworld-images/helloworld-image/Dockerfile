@@ -3,4 +3,4 @@ FROM ubuntu
 #Labels as key value pair
 LABEL Maintainer="anvesh"
 
-CMD ["echo" , "Welcome to DevOps Classes"]
+CMD ["echo" , "Hello World!!, Welcome to Docker Classes!! This is from version 2"]

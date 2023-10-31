@@ -2,6 +2,6 @@
 #include <stdio.h> 
 int main() 
 { 
-	printf("Welcome to Docker World!!!\n"); 
+	printf("Hello, Welcome to Docker World!!!\n"); 
 	return 0; 
 }

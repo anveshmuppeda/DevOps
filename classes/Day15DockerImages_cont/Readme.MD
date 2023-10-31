@@ -195,7 +195,7 @@ webpage path
 
 ## Args & Environement Variables   
 
-The ARG arguments are only available when building the image, while ENV parameters are available to the application containers during build and when the container is running. 
+> **_NOTE:_** The ARG arguments are only available when building the image, while ENV parameters are available to the application containers during build and when the container is running. 
 
 ### passing arguments  
 ```

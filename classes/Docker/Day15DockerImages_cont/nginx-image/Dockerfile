@@ -12,4 +12,5 @@ COPY index.html /usr/share/nginx/html/index.html
 
 #exposing the port
 EXPOSE 80
+
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

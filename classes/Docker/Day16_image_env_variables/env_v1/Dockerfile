@@ -1,6 +1,6 @@
 FROM ubuntu
-ARG environment=prod
-RUN echo "The ARG name is environment, and the values is ${environment}" 
-RUN echo ${environment} > /tmp/test
-ENV testname1=testvalue1
-RUN echo "The ARG variable value is $environment, the ENV variable value is $testname1"
+ARG myfirstarg=1000
+RUN echo "The ARG name is myfirstarg, and the values is ${myfirstarg}" 
+RUN echo ${myfirstarg} > /tmp/test
+ENV myfirstenvvar=5000
+RUN echo "The ARG variable value is $myfirstarg, the ENV variable value is $myfirstenvvar"

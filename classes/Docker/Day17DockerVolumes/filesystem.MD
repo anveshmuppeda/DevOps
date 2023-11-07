@@ -15,3 +15,7 @@ to connect to sql
 ```
 mysql -u root -p
 ```  
+
+
+docker run --name my-mysql-v2 -e MYSQL_ROOT_PASSWORD=anvesh123 -v my_sql_volume:/var/lib/mysql -d mysql
+

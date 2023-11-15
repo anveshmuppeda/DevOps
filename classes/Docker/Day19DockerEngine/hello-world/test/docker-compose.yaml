@@ -1,0 +1,7 @@
+services:
+  my-own-hello-world:
+    image: hello-world
+    container_name: my-own-container-from-docker-compose
+  my-own-hello-world2:
+    image: hello-world
+    container_name: my-own-container-from-docker-compose-2

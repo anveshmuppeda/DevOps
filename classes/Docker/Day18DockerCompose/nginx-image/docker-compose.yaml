@@ -1,0 +1,8 @@
+services:
+  my-own-website:
+    build:
+      context: .
+    image: my-own-website-image
+    container_name: my-own-container-website
+    ports:
+      - "55:80"

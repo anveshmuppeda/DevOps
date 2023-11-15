@@ -6,8 +6,8 @@
 4. [ Container Exec ](#exec)
 5. [ Image Build & Tag ](#build)
 6. [ Nginx Container ](#nginx)  
-7. [ Args & Environment Variables ](#args)
-
+7. [ Args & Environment Variables ](#args)  
+7. [ Logs ](#logs)  
 ---  
 <a name="image"></a>
 ## Image  
@@ -49,7 +49,33 @@ docker system prune
 To additionally remove any stopped containers and all unused images (not just dangling images), add the -a flag to the command:
 ```
 docker system prune -a
+```  
+
+### docker login  
+This command is used to login to the docker hub repository  
 ```
+Usage: docker login [REGISTRY_URL]
+```  
+
+### Docker Logout   
+This command is used to log out or remove the credentials used to authenticate with a Docker registry.    
+```
+Usage: docker logout [REGISTRY_URL]
+```  
+ 
+### Docker network  
+This command manages Docker networks. Docker networks enable containers to connect securely and isolatedly with one another and with external network resources.  
+```
+Usage: docker network create <network_name>
+```
+
+### Docker volume  
+This command creates a new Docker volume named “my_volume” in the Docker container. Volumes in Docker are generated independently of containers.  
+```
+Usage: docker volume create <volume-name>
+```
+
+
 
 ---  
 <a name="container"></a>
@@ -167,6 +193,18 @@ docker build --tag "<image-name>:<image-tag>" --file "/path/to/Dockerfile" .
 docker tag <image-name>:<current-tag> <image-name>:<new=tag>
 ```
 
+### docker commit  
+This command creates a new image of an edited container on the local system  
+```
+Usage: docker commit <conatainer id> <username/imagename>  
+```
+
+### Docker history  
+Using this command, you may examine the evolution of a Docker image or its constituent parts.  
+```
+Usage: docker history <image_name>  
+```
+  
 ---
 
 <a name="nginx"></a>
@@ -210,4 +248,20 @@ docker run --name [container-name] -e "[variable-name]=[new-value]" [image-name]
 ### passing environment variables file  
 ```
 docker run --name [container-name] --env-file [path-to-env-file] [image-name]
+```  
+
+---  
+
+<a name="logs"></a>  
+## Logs  
+
+## to get the container logs  
 ```
+docker logs <container-id>
+``` 
+
+## to get the all the activities from docker container  
+```
+docker logs <container-id>  --details
+```  
+

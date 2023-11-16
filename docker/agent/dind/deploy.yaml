@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dind-agent
+  labels:
+    app: syscont
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: syscont
+  template:
+    metadata:
+      labels:
+        app: syscont
+      annotations:
+        io.kubernetes.cri-o.userns-mode: "auto:size=65536"
+    spec:
+      runtimeClassName: sysbox-runc
+      containers:
+      - name: ubu-bio-systemd-docker
+        image: anvesh35/azure-docker-agent:dind-with-amd64-arm64
+        command: ["/sbin/init"]
+        env:
+          - name: AZP_URL
+            valueFrom:
+              secretKeyRef:
+                name: azdevops
+                key: AZP_URL
+          - name: AZP_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: azdevops
+                key: AZP_TOKEN
+          - name: AZP_POOL
+            valueFrom:
+              secretKeyRef:
+                name: azdevops
+                key: AZP_POOL

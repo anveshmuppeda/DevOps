@@ -1,0 +1,127 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS Class - Docker Setup on Ubuntu machine
+
+Parameters:
+  Environment:
+    Description: "Specify the Environment type of the stack."
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - test
+      - prod
+
+  Day:
+    Description: Day of the Class
+    Type: String
+    Default: Day-11
+
+  UbuntuAmiID:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Description: "The ID of the AMI."
+    Default: /aws/service/canonical/ubuntu/server/jammy/stable/current/amd64/hvm/ebs-gp2/ami-id
+
+  KeyPairName:
+    Type: String
+    Description: The name of an existing Amazon EC2 key pair in this region to use to SSH into the Amazon EC2 instances.
+    Default: us-east-1
+  
+  SecurityGroupSuffix:
+    Type: String
+    Description: Please enter the Security Group Suffix Name
+    Default: sg
+
+Mappings:
+  Environment:
+    dev:
+      ServerName: dev-server
+      InstanceType: t2.micro
+      PublicSecurityGroupName: docker-sg
+
+    test:
+      ServerName: test-server
+      InstanceType: t2.micro
+      PublicSecurityGroupName: docker-sg
+
+    prod:
+      ServerName: prod-server
+      InstanceType: t3.medium
+      PublicSecurityGroupName: docker-sg
+
+Conditions:
+    isProduction: !Equals
+      - !Ref Environment
+      - prod
+    isDev: !Equals
+      - !Ref Environment
+      - dev
+    isTest: !Equals
+      - !Ref Environment
+      - test
+
+Resources:
+  PublicSercuritGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !FindInMap [Environment, !Ref Environment, PublicSecurityGroupName]
+      GroupDescription: "Allow HTTP/HTTPS and SSH inbound and outbound traffic"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !FindInMap [Environment, !Ref Environment, PublicSecurityGroupName]
+        - Key: Day
+          Value: !Ref Day
+  
+  MyProdDockerServer:
+    Type: AWS::EC2::Instance
+    Condition: isProduction
+    DependsOn: PublicSercuritGroup
+    Properties:
+      ImageId: !Ref UbuntuAmiID
+      InstanceType: !FindInMap [Environment, !Ref Environment, InstanceType]
+      KeyName: !Ref KeyPairName
+      SecurityGroupIds:
+        - !Ref PublicSercuritGroup
+      Tags:
+        - Key: Name
+          Value: !Join ["-", [!Ref Environment, docker-server]]
+        - Key: Day
+          Value: !Ref Day
+        - Key: Application
+          Value: Docker
+      UserData:
+        Fn::Base64: 
+          !Sub |
+            #!/bin/bash
+            #updating the apt repository
+            apt-get update -y
+
+            #Docker Installation
+            #If you are running Linux you will need to install Docker directly. You should be logged in as a user with sudo privileges. First, you will need to ensure that you have the command line utility cURL. Do this by opening a terminal and typing
+            which curl
+            sudo apt-get update
+            #If cURL is not installed, update your package manager and install it, using:
+            sudo apt-get install curl
+            #Now that you have cURL, you can use it to get the latest Docker package:
+            curl -fsSL https://get.docker.com/ | sh
+            #Add your account to the docker group.
+            #sudo usermod -aG docker <your_username>, here <your_username> is root
+            sudo usermod -aG docker root
+            #This step is required to be able to run Docker commands as a non-root user. You will have to log out and log back in for the change to take effect.
+            #Now you should have Docker! Verify that it is installed by running the hello-world container:
+            docker run hello-world
+
+            #Running our Actual Website using nginx:
+            docker run -d -p 80:80 --name nginx nginx

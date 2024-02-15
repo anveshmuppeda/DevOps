@@ -1,0 +1,9 @@
+services:
+    environment-variable-version-1:
+      image: anvesh35/environment-variable:sum
+    environment-variable-version-2:
+      image: anvesh35/environment-variable:multivar
+    arguments:
+      image: anvesh35/arguments:v1.0
+    custom-hello-world:
+      image: anvesh35/custom-hello-world:pythonbasepython

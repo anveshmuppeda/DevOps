@@ -1,0 +1,6 @@
+services:
+  custom-hello-world:
+    build:
+      context: .
+    image: customized-image-hello-world
+    container_name: custom-hello-container

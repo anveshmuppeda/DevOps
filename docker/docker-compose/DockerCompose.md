@@ -25,6 +25,7 @@ docker-compose up -d
 ```
 
 ## Environment variables  
+
 ### environment vars  
 ```
   environment:

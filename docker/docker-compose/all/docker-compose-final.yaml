@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  my-hello-world:
+    image: hello-world
+    environment:
+      application: "hello-world"
+      version: "1.0"
+  my-nginx:
+    build:
+      context: .
+    image: my-nginx-image
+    container_name: my-website
+    ports:
+      - "55:80"
+    volumes:
+      - nginx_volume:/usr/share/nginx/html
+    environment:
+      application: "nginx-application"
+      version: "1.0"
+      SUR_NAME: "Muppeda"
+
+volumes:
+  nginx_volume:

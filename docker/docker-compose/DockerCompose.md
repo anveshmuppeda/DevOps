@@ -85,3 +85,8 @@ web:
     - db
  ```
 
+### Volumes  
+```
+docker run -v data_volume:/var/lib/mysql mysql  
+docker run -v nginx_volume:/usr/share/nginx/html nginx  
+```

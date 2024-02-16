@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - nginx_volume:/usr/share/nginx/html
+
+volumes:
+  nginx_volume:

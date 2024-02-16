@@ -12,6 +12,11 @@ docker-compose up
 docker-compose down  
 ```
 
+## To validate the syntax and print the configuration:  
+```
+docker-compose config
+```
+ 
 ## Custom docker compose file name  
 Use -f option to specify the file name.  
 Example:

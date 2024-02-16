@@ -1,7 +1,7 @@
 services:
   my-own-hello-world:
-    image: hello-world
-    container_name: my-own-container-from-docker-compose
+    image: nginx
+    container_name: nginx0
   my-own-hello-world2:
-    image: hello-world
-    container_name: my-own-container-from-docker-compose-2
+    image: nginx
+    container_name: nginx1

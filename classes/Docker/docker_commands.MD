@@ -124,6 +124,10 @@ docker rm $(docker ps -a -f status=exited -q)
 docker rm $(docker ps -a -f status=created -q)
 ```
 
+### To stop all running containers  
+```
+docker stop $(docker ps -q)
+```
 ---
 <a name="run"></a>
 ## Run Container

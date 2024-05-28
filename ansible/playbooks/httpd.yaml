@@ -1,0 +1,16 @@
+---
+  - name: Installing httpd on anvesh
+    hosts: anvesh
+    become: yes
+    become_user: root
+    tasks:
+      - name: create username apacheadm
+        user:
+          name: apacheadm
+          shell: /bin/bash
+          home: /home/weblogic
+
+      - name: install httpd
+        yum:
+          name: httpd
+          state: installed

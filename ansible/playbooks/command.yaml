@@ -1,0 +1,9 @@
+---
+  - name: Check content using cat
+    hosts: all
+    tasks:
+     - name: Execute the cat command
+       register: mytestyaml
+       command: "cat /tmp/test.yaml"
+     - debug:
+        var: mytestyaml.stdout_lines

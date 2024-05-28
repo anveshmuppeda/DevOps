@@ -1,0 +1,9 @@
+---
+ - hosts: all
+   vars:
+    - username: anvesh
+    - path: /path/to/anvesh
+   tasks:
+    - name: print variables from the above
+      debug:
+       msg: "Username: {{ username }}, Path is: {{ path }}"

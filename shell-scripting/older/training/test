@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+#Printing Hi message
+echo "Hi..."  #ignore
+
+var1="Hello World"
+var2=20
+
+echo "$var1"
+echo "$var2"
+
+

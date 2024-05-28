@@ -1,7 +1,5 @@
 #!/bin/bash
 
-## Capgemini UK PLC Proprietary and Confidential ##
-## Copyright Capgemini 2020 - All Rights Reserved ##
 
 i=2
 var=1

@@ -1,8 +1,5 @@
 #!/bin/bash
 
-## Capgemini UK PLC Proprietary and Confidential ##
-## Copyright Capgemini 2020 - All Rights Reserved ##
-
 # Parse input parameters
 BOLD='\033[1m'
 

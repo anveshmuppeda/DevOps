@@ -1,0 +1,9 @@
+resource "aws_instance" example1" {
+  ami = "${lookup(var.AMIS, var.AWS_REGION)}"
+  instance_type = "t2.micro"
+
+  subnet_id = "${aws_subnet.main-public-1.is}"
+
+  vpc_security_groupids = {"${aws_security_group_allow-ssh.id}"]
+
+}

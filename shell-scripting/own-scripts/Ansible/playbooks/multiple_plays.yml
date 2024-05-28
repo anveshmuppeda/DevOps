@@ -1,0 +1,20 @@
+---
+  - name: Installing Git on Slave 2
+    hosts: slave2
+    become: yes
+    become_user: root
+    tasks:
+     - name: install git
+       yum:
+        name: git
+        state: installed
+  - name: Deplaying a test file from tmp using cat
+    hosts: anvesh
+    become: yes
+    become_user: root
+    tasks:
+     - name: Run cat command
+       register: mytestyaml
+       command: "cat /tmp/test.yaml"
+     - debug:
+         var: mytestyaml.stdout_lines

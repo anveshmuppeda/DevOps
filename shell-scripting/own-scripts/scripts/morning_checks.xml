@@ -1,0 +1,79 @@
+<joblist>
+  <job>
+    <context>
+      <options preserveOrder='true'>
+        <option name='environment_region' required='true'>
+          <description>Please enter the region of the environment ex: us-east-1</description>
+        </option>
+        <option name='check' required='true' value='all' values='all,awsec2,awsrds,consulchecks,uistatus' valuesListDelimiter=','>
+          <description>Please select the proper option</description>
+          <label>CHECK</label>
+        </option>
+        <option name='override_provisioning_branch'>
+          <description>Branch or tag or commit ID to checkout instead of one sourced from consul for terraform repo.</description>
+        </option>
+      </options>
+    </context>
+    <defaultTab>output</defaultTab>
+    <description>This job will give the info about the AWS console checks</description>
+    <executionEnabled>true</executionEnabled>
+    <group>platform/maintenance</group>
+    <id>63df52ad-ceaa-493b-b3d3-6653319e74d0</id>
+    <loglevel>INFO</loglevel>
+    <name>Morning_Checks</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <plugins>
+          <LogFilter type='key-value-data'>
+            <config>
+              <logData>false</logData>
+              <regex>^RUNDECK:DATA:(.+?)\s*=\s*([\s\S]+)$</regex>
+            </config>
+          </LogFilter>
+          <LogFilter type='quiet-output'>
+            <config>
+              <loglevel>verbose</loglevel>
+              <matchLoglevel>normal</matchLoglevel>
+              <quietMatch>true</quietMatch>
+            </config>
+          </LogFilter>
+        </plugins>
+        <script><![CDATA[#! /bin/bash
+
+output_json={}
+
+for variable in ${!RD_OPTION_@}; do
+    json_key=$(echo -n $variable | base64)
+    json_value=$(echo -n ${!variable} | base64)
+    output_json=$(echo -n $output_json | jq ". + {\"$json_key\":\"$json_value\""})
+done
+
+for variable in ${!RD_GLOBALS_@}; do
+    json_key=$(echo -n $variable | base64)
+    json_value=$(echo -n ${!variable} | base64)
+    output_json=$(echo -n $output_json | jq ". + {\"$json_key\":\"$json_value\""})
+done
+
+for variable in ${!RD_JOB_@}; do
+    json_key=$(echo -n $variable | base64)
+    json_value=$(echo -n ${!variable} | base64)
+    output_json=$(echo -n $output_json | jq ". + {\"$json_key\":\"$json_value\""})
+done
+
+echo -n "RUNDECK:DATA:VARIABLES=$(echo -n $(echo $output_json | base64))"]]></script>
+        <scriptargs />
+      </command>
+      <command>
+        <jobref group='platform/docker_agent' name='run_script_on_agent' nodeStep='true'>
+          <arg line='-script_params "${data.VARIABLES}" -script_path "maintenance/caas/nkaas/morning_checks.sh"' />
+          <useName>true</useName>
+          <uuid>367679a3-431e-4e45-a8d7-83e15f216e85</uuid>
+        </jobref>
+      </command>
+    </sequence>
+    <timeout>1h</timeout>
+    <uuid>63df52ad-ceaa-493b-b3d3-6653319e74d0</uuid>
+  </job>
+</joblist>

@@ -1,0 +1,10 @@
+---
+  - name: Installing Git on Slave 2
+    hosts: slave2
+    become: yes
+    become_user: root
+    tasks:
+      - name: install git
+        yum:
+          name: git
+          state: installed

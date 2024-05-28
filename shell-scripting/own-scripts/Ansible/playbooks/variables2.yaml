@@ -1,0 +1,21 @@
+---
+ - hosts: all
+   vars:
+    message: Hello guys!
+    students:
+      - Anvesh
+      - Test1
+      - Test2
+      - Ansible
+   tasks:
+    - name: Printing the all variables from the array
+      debug:
+        msg: "{{ item }}"
+      with_items:
+        - "{{ students }}"
+    - name: Printing the first varibale
+      debug:
+        msg: "{{ message }}"
+    - name: Printing the single element from the array
+      debug:
+        msg: "{{ students[1] }}"

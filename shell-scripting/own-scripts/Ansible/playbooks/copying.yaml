@@ -1,0 +1,11 @@
+- name: Copying a file from master to slave nodes
+  hosts: all
+  tasks:
+    - name: copying file
+      become: true 
+      copy:
+        src: /tmp/test.yaml
+        dest: /tmp/test.yaml
+        owner: ansibleuser
+        group: ansibleuser
+        mode: 0644

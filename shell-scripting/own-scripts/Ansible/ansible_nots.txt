@@ -1,0 +1,118 @@
+
+adduser ansibleuser
+User: ansibleuser
+Password: Anvesh@123
+
+remote_user: ansibleuser
+compgen -u
+
+To verify the indentation
+ansible-playbook --syntax-check git.yaml
+
+To run in debug mode
+
+
+To list available servers under the host group
+ansible all --list -i /etc/ansible/hosts
+
+
+172.31.30.227 -- master
+172.31.16.131 -- slave-1
+172.31.17.127 -- slave-2
+
+
+
+ansible-doc -l 
+
+To run any command
+ansible all -m shell -a 'hostname'
+
+here all is an invetory(anvesh, slave2)
+m= module
+
+ansible -m yum -a "name=java-1.8.0-openjdk state=present" all
+
+ansible-playbook --syntax-check sampleplaybook.yml
+================================================================
+
+
+Uses of Ansible
+
+ansible is an configuration management tool
+which means in order to work your applications there are some dependecies like upgrades or some install applications or some changes to an exitsing setup which needs to be done on multiple sytem and this is impossible to do it manually on all systems.
+that is the reasons we use ansible.
+for examaple if you want to install any software on all server, by using the ansible we can directly install on all serveres withour directly accessing or manually acccessing the servers.
+Which saves lot of time and reduces human efforts
+
+this is written in python we have lot of modules which helps us to configure or write playbooks easily
+
+YAML
+This is written in YAML which is markup language
+easy to understand
+
+Change Management
+Using the ansible we can deploy the changes easily in to the platform.
+
+Agent less
+all slaves are no need to install any ansible dependecies 
+no need to setup any agents
+
+No extra softwares
+ required
+
+No complex upgraders
+
+Simple and human understandable 
+which meas easy to understand and easy to update the current programs/yaml files
+
+N Number of Modules
+lot of modules are available 
+
+No complex hings
+easy to understand
+
+Used for orchestration 
+
+Automation of tasks
+easy to tasks
+
+Provisioning
+Using AWS cli commands and we can provisioning any servers
+Check AWS cli moules
+infra provisioning & configurations
+
+ideampotancy f(x(x))=f(x)
+if you download any file then if you try to redownload it then it won't download 
+same for installing any software
+if you already installed java, then again if you try to install java, it won't reinstall
+
+key-based mechanism
+ansible works on key based mechanism which means the master node connect with slaves using the key-based mechanism
+we are exchaning the master key to the slave nodes for inter connection
+
+As deplymemt and configuration tool
+we can se this as a deplpyment and configuration tool
+
+
+
+=========================================
+Slides explaination:
+Well, I have explained what each line does
+
+name Name of the playbook
+
+hosts A set of hosts usually grouped together as a host group and defined in inventory file
+
+become To tell ansible this play has to be executed with elevated privileges
+
+become_user the user name that we want to switch to like compare it with sudo su - user
+
+tasks set of tasks to execute, All tasks would be defined below this
+
+myfileoutput
+myfileoutput
+
+
+
+
+
